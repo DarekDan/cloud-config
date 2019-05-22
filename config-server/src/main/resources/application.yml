@@ -3,7 +3,7 @@ spring:
     config:
       server:
         git:
-          uri: 'https://github.com/bslota/config-repository'
+          uri: 'https://github.com/DarekDan/config-repository'
           clone-on-start: true
           search-paths: 'config/{application}'
     stream:

@@ -12,6 +12,8 @@ services:
       - "8761:8761"
     networks:
       - microservices
+    depends_on:
+      - kafka
   config-server:
       build: ./config-server
       environment:
@@ -34,6 +36,7 @@ services:
       - microservices
     depends_on:
       - discovery-server
+      - config-server
   product-manager:
     build: ./product-manager
     environment:
@@ -45,6 +48,7 @@ services:
       - microservices
     depends_on:
       - discovery-server
+      - config-server
   gateway:
     build: ./gateway
     environment:
@@ -55,14 +59,15 @@ services:
     networks:
       - microservices
     depends_on:
-      - discovery-server
+      - product-manager
+      - customer-manager
   kafka:
     image: spotify/kafka
     networks:
       - microservices
     ports:
       - "9092:9092"
-      - "2181:2181"
+#      - "12181:2181"
     environment:
       ADVERTISED_HOST: kafka
       ADVERTISED_PORT: 9092
